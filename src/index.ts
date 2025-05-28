@@ -1,44 +1,17 @@
-import express from "express";
-import swaggerUi from "swagger-ui-express";
+import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDocument } from './swaggerDocument';
+import passwordRouter from './routes/password';
 
 const app = express();
 const port = 3000;
 
-// SwaggerドキュメントのJSON
-const swaggerDocument = {
-  openapi: "3.0.0",
-  info: {
-    title: "Sample API",
-    version: "1.0.0",
-  },
-  paths: {
-    "/hello": {
-      get: {
-        summary: "Hello API",
-        responses: {
-          "200": {
-            description: "Returns a hello message",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "object",
-                  properties: {
-                    message: { type: "string" },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};
+app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/password', passwordRouter);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.get("/hello", (req, res) => {
-  res.json({ message: "Hello World!" });
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello World!' });
 });
 
 app.listen(port, () => {
