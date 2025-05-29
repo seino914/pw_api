@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import zxcvbn from 'zxcvbn';
 
 const router = Router();
 
-export default router.post('/score', (req, res) => {
+router.post('/score', (req: Request, res: Response) => {
   const { password } = req.body;
   if (typeof password !== 'string') {
     return res.status(400).json({ error: 'パスワードは文字列型にしてください。' });
@@ -18,3 +18,5 @@ export default router.post('/score', (req, res) => {
     feedback: result.feedback?.suggestions.join(' ') || 'とても良いです！',
   });
 });
+
+export default router;

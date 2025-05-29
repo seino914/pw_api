@@ -1,7 +1,7 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerDocument } from './swaggerDocument';
-import passwordRouter from './routes/password';
+import passwordRouter from './routes/password/score';
 
 const app = express();
 const port = 3000;
